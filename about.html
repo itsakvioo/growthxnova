@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#06090e">
+  <title>About Us — Growth X Nova | Meet Ayush Ranjan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root {
+      --bg: #06090e;
+      --card-bg: rgba(13, 19, 28, 0.75);
+      --ink: #f2f6fa;
+      --muted: #8b9baa;
+      --muted-light: #b4c2ce;
+      --line: rgba(255, 255, 255, 0.08);
+      --line-bright: rgba(255, 255, 255, 0.18);
+      --lime: #c6ff5e;
+      --cyan: #64e8ed;
+      --grad: linear-gradient(120deg, #c6ff5e 0%, #64e8ed 100%);
+      --radius-sm: 10px;
+      --radius-md: 18px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background-color: var(--bg); overflow-x: hidden; }
+    body { font-family: 'DM Sans', sans-serif; background-color: var(--bg); color: var(--ink); line-height: 1.65; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    /* Guaranteed Centering & Safe Margins on all screens */
+    .wrap {
+      width: min(1200px, 100%);
+      margin-inline: auto;
+      padding-inline: clamp(24px, 5vw, 40px);
+    }
+    .gradient-text { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
+    
+    /* ==========================================================
+       UNIFIED TOPBAR & NAVBAR (IDENTICAL ACROSS ALL PAGES)
+       ========================================================== */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: 76px;
+      display: flex;
+      align-items: center;
+      background: rgba(6, 9, 14, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--line);
+      transition: var(--transition);
+    }
+
+    .topbar.scrolled {
+      background: rgba(6, 9, 14, 0.96);
+      border-bottom-color: var(--line-bright);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      width: 100%;
+    }
+    
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--grad);
+      display: grid;
+      place-items: center;
+      color: #06090e;
+      font-size: 16px;
+      box-shadow: 0 0 20px rgba(198, 255, 94, 0.35);
+      transition: var(--transition);
+    }
+
+    .brand:hover .brand-mark {
+      transform: rotate(8deg) scale(1.05);
+    }
+
+    .navlinks {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 8px 24px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--line);
+    }
+
+    .navlinks a {
+      color: var(--muted-light);
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 4px 2px;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .navlinks a:hover,
+    .navlinks a.active {
+      color: #fff;
+    }
+
+    .navlinks a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--lime);
+      border-radius: 2px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 24px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 13.5px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--lime);
+      color: #06090e;
+      box-shadow: 0 4px 20px rgba(198, 255, 94, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(198, 255, 94, 0.4);
+      background: #d4ff7d;
+    }
+
+    .btn-primary:hover i { transform: translateX(4px); }
+    .btn-primary i { transition: transform 0.25s ease; }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--ink);
+      border-color: var(--line-bright);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--lime);
+      color: var(--lime);
+      transform: translateY(-2px);
+    }
+
+    .btn-shimmer::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+      transform: rotate(25deg);
+    }
+
+    .btn-shimmer:hover::after {
+      left: 140%;
+      transition: 0.75s ease-in-out;
+    }
+
+    .menu-btn {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--line-bright);
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      place-items: center;
+      transition: var(--transition);
+    }
+
+    .menu-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--lime);
+    }
+
+    /* Mobile Drawer */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 9, 14, 0.98);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      z-index: 1100;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+
+    .mobile-menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 25px;
+    }
+
+    .mobile-close-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--line-bright);
+      color: #fff;
+      font-size: 18px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .mobile-close-btn:hover {
+      background: var(--lime);
+      color: #06090e;
+    }
+
+    .mobile-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: auto;
+    }
+
+    .mobile-links a {
+      font-family: 'Manrope', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink);
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .mobile-links a:hover,
+    .mobile-links a.active {
+      color: var(--lime);
+      padding-left: 6px;
+    }
+
+    .page-hero { padding: 140px 0 45px; text-align: center; }
+    .eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; color: var(--lime); display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(198, 255, 94, 0.08); border: 1px solid rgba(198, 255, 94, 0.2); border-radius: var(--radius-full); margin-bottom: 18px; }
+    .page-hero h1 { font-family: 'Manrope', sans-serif; font-size: clamp(2.3rem, 5vw, 4rem); font-weight: 800; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .page-hero p { color: var(--muted); font-size: 16.5px; max-width: 620px; margin: 0 auto; line-height: 1.7; }
+
+    .about-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 50px; align-items: center; padding-bottom: 90px; }
+    .mentor-card { border: 1px solid var(--line-bright); border-radius: var(--radius-lg); background: linear-gradient(150deg, #16222b, #0d131a 70%); padding: 36px; display: flex; flex-direction: column; justify-content: space-between; min-height: 420px; position: relative; overflow: hidden; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6); }
+    .mentor-symbol { width: 150px; height: 150px; border-radius: 50%; border: 2px solid var(--lime); align-self: center; display: grid; place-items: center; margin: 30px auto; font-family: 'Manrope', sans-serif; font-size: 56px; font-weight: 800; color: var(--lime); box-shadow: 0 0 60px rgba(198, 255, 94, 0.2); }
+    .mentor-caption { border-top: 1px solid var(--line); padding-top: 18px; }
+    .mentor-caption span { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--lime); letter-spacing: 0.12em; }
+    .mentor-caption h3 { font-family: 'Manrope', sans-serif; font-size: 24px; font-weight: 800; margin-top: 4px; }
+
+    .about-copy h2 { font-family: 'Manrope', sans-serif; font-size: clamp(2rem, 3.8vw, 3rem); font-weight: 800; line-height: 1.15; margin-bottom: 18px; letter-spacing: -0.04em; }
+    .about-copy p { color: var(--muted-light); font-size: 15px; line-height: 1.8; margin-bottom: 16px; }
+    .about-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 28px 0; }
+    .about-stat { border-left: 2px solid var(--lime); padding-left: 14px; }
+    .about-stat strong { display: block; font-family: 'Manrope', sans-serif; font-size: 26px; font-weight: 800; color: #fff; }
+    .about-stat span { font-size: 12px; color: var(--muted); }
+
+    .why-box { padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255, 255, 255, 0.02); margin-top: 25px; }
+    .why-box h3 { font-family: 'Manrope', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 14px; }
+    .why-box ul { list-style: none; display: grid; gap: 12px; }
+    .why-box li { font-size: 13.5px; color: var(--muted-light); display: flex; gap: 12px; align-items: flex-start; }
+    .why-box i { color: var(--lime); margin-top: 4px; font-size: 12px; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--line); padding: 70px 0 30px; background: #04060a; }
+    .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1.2fr; gap: 40px; padding-bottom: 45px; }
+    .footer-brand p { color: var(--muted); font-size: 14px; max-width: 320px; margin: 18px 0 24px; line-height: 1.7; }
+    .social-row { display: flex; gap: 10px; }
+    .social-btn { width: 40px; height: 40px; border-radius: 12px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line); display: grid; place-items: center; color: var(--muted-light); font-size: 15px; transition: var(--transition); }
+    .social-btn:hover { background: var(--lime); color: #06090e; border-color: var(--lime); transform: translateY(-3px); }
+    .footer h4 { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lime); margin-bottom: 20px; }
+    .footer-nav-list { list-style: none; display: grid; gap: 12px; }
+    .footer-nav-list a { color: var(--muted); font-size: 14px; transition: var(--transition); }
+    .footer-nav-list a:hover { color: #fff; padding-left: 4px; }
+    .footer-bottom { border-top: 1px solid var(--line); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-family: 'DM Mono', monospace; font-size: 11px; gap: 16px; flex-wrap: wrap; }
+    
+    .floating-tools { position: fixed; right: 22px; bottom: 22px; z-index: 900; display: flex; flex-direction: column; gap: 12px; }
+    .float-icon { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 21px; cursor: pointer; transition: var(--transition); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); }
+    .float-icon:hover { transform: translateY(-4px) scale(1.05); }
+    .float-wa { background: #25d366; box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35); }
+    .back-to-top { background: #111822; border: 1px solid var(--line-bright); color: var(--lime); opacity: 0; pointer-events: none; }
+    .back-to-top.show { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 960px) {
+      .navlinks, .nav-cta { display: none !important; }
+      .menu-btn { display: grid !important; place-items: center !important; }
+      .about-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+    }
+    @media (max-width: 640px) {
+      .wrap { padding-inline: 18px; }
+      .page-hero { padding: 105px 0 35px; }
+      .about-stats { grid-template-columns: 1fr; gap: 12px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation (Exact Same Structure Across All Pages) -->
+  <header class="topbar" id="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="index.html" aria-label="Growth X Nova Home">
+        <span class="brand-mark"><i class="fa-solid fa-arrow-trend-up"></i></span>
+        <span>GROWTH <span class="gradient-text">X NOVA</span></span>
+      </a>
+
+      <!-- Desktop Navlinks -->
+      <nav class="navlinks" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="packages.html">Packages</a>
+        <a href="results.html">Results</a>
+        <a href="courses.html">Courses</a>
+        <a href="about.html" class="active">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-primary btn-shimmer nav-cta" href="contact.html">
+          <span>Book Call</span>
+          <i class="fa-solid fa-bolt"></i>
+        </a>
+        <button class="menu-btn" id="menuToggle" aria-label="Open Navigation menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Responsive Mobile Drawer Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark"><i class="fa-solid fa-arrow-trend-up"></i></span>
+        <span>GROWTH <span class="gradient-text">X NOVA</span></span>
+      </a>
+      <button class="mobile-close-btn" id="mobileClose" aria-label="Close menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="mobile-links">
+      <a href="index.html">Home <i class="fa-solid fa-chevron-right"></i></a>
+      <a href="services.html">Services <i class="fa-solid fa-chevron-right"></i></a>
+      <a href="packages.html">Packages <i class="fa-solid fa-chevron-right"></i></a>
+      <a href="results.html">Results <i class="fa-solid fa-chevron-right"></i></a>
+      <a href="courses.html">Courses <i class="fa-solid fa-chevron-right"></i></a>
+      <a href="about.html" class="active">About Us <i class="fa-solid fa-chevron-right"></i></a>
+      <a href="contact.html">Contact Us <i class="fa-solid fa-chevron-right"></i></a>
+    </div>
+
+    <div style="margin-top: 15px;">
+      <a class="btn btn-primary btn-shimmer" href="contact.html" style="width: 100%;">
+        <span>Book Strategy Call</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+
+  <main>
+    <section class="page-hero">
+      <div class="wrap">
+        <div class="eyebrow"><i class="fa-solid fa-users"></i> The Brain Behind The Scale</div>
+        <h1>About <span class="gradient-text">Growth X Nova</span></h1>
+        <p>Combining quantitative data analysis with psychological storytelling to craft unbeatable media buying systems.</p>
+      </div>
+    </section>
+
+    <div class="wrap about-grid">
+      <div class="mentor-card">
+        <div class="eyebrow" style="width: fit-content;">LEAD STRATEGIST</div>
+        <div class="mentor-symbol">AR</div>
+        <div class="mentor-caption">
+          <span>PERFORMANCE MARKETING EXPERT</span>
+          <h3>Ayush Ranjan</h3>
+        </div>
+      </div>
+
+      <div class="about-copy">
+        <h2>Strategy With A <br><span class="gradient-text">Human Touch.</span></h2>
+        <p>
+          Hey there! 👋 I'm <strong>Ayush Ranjan</strong>, your go-to Performance Advertising Specialist. Over the last 3.5+ years, I have successfully executed over 1,000 ad campaigns for D2C brands, educational startups, service businesses, and high-ticket creators across India and internationally.
+        </p>
+        <p>
+          In a world where generic AI copy and bloated agency retainers deliver mediocre results, Growth X Nova operates on a single principle: <strong>Every dollar spent on media must be held accountable for measurable revenue growth.</strong>
+        </p>
+        <p>
+          We do not treat ad budgets as cost centers—we treat them as investment engines. Whether you are scaling an existing brand to 8 figures or launching your first acquisition funnel, our systems are built to withstand algorithm shifts and deliver predictable returns.
+        </p>
+
+        <div class="about-stats">
+          <div class="about-stat">
+            <strong>1000+</strong>
+            <span>Projects Completed</span>
+          </div>
+          <div class="about-stat">
+            <strong>50+</strong>
+            <span>Partnered Brands</span>
+          </div>
+          <div class="about-stat">
+            <strong>$60K+</strong>
+            <span>Ad Spend Handled</span>
+          </div>
+        </div>
+
+        <div class="why-box">
+          <h3>Why High-Growth Founders Trust Us:</h3>
+          <ul>
+            <li><i class="fa-solid fa-circle-check"></i> <strong>Proven Track Record:</strong> Over 1,000 successful campaigns delivered with verified ROAS.</li>
+            <li><i class="fa-solid fa-circle-check"></i> <strong>Hands-on Specialist Attention:</strong> Direct access to senior media buyers, never outsourced to juniors.</li>
+            <li><i class="fa-solid fa-circle-check"></i> <strong>Cross-Industry Scalability:</strong> Deep expertise spanning E-commerce, Info-Products, Dropshipping, and B2B Lead Gen.</li>
+            <li><i class="fa-solid fa-circle-check"></i> <strong>End-To-End Growth Architecture:</strong> From video hooks to landing page copy and post-purchase WhatsApp retention.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Complete Footer -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html">
+            <span class="brand-mark"><i class="fa-solid fa-arrow-trend-up"></i></span>
+            <span>GROWTH <span class="gradient-text">X NOVA</span></span>
+          </a>
+          <p>A high-performance media buying & growth studio. We engineer scalable acquisition funnels for forward-thinking brands.</p>
+          <div class="social-row">
+            <a class="social-btn" href="https://www.instagram.com/growthxnova1/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a class="social-btn" href="https://www.youtube.com/@growthxnova" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a class="social-btn" href="https://t.me/+FfOqjUJ07mUxYTU1" target="_blank" rel="noopener" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+            <a class="social-btn" href="https://wa.me/918931980405" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <div>
+          <h4>Explore</h4>
+          <ul class="footer-nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">All Services</a></li>
+            <li><a href="packages.html">Pricing & Packages</a></li>
+            <li><a href="results.html">Proof & Case Studies</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Company</h4>
+          <ul class="footer-nav-list">
+            <li><a href="about.html">About The Studio</a></li>
+            <li><a href="courses.html">Courses & Academy</a></li>
+            <li><a href="contact.html">Book Strategy Call</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Direct Connect</h4>
+          <ul class="footer-nav-list">
+            <li><a href="tel:+918931980405"><i class="fa-solid fa-phone" style="color: var(--lime); margin-right: 8px;"></i> +91 8931980405</a></li>
+            <li><a href="mailto:admin@growthxnova.com"><i class="fa-solid fa-envelope" style="color: var(--lime); margin-right: 8px;"></i> admin@growthxnova.com</a></li>
+            <li><span style="color: var(--muted); font-size: 13px;"><i class="fa-solid fa-location-dot" style="color: var(--lime); margin-right: 8px;"></i> Global & India</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Growth X Nova. All rights reserved.</span>
+        <span>ENGINEERED FOR COMPOUNDING REVENUE ↗</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Tools -->
+  <div class="floating-tools">
+    <a class="float-icon float-wa" href="https://wa.me/918931980405?text=Hi%20GrowthX%20Nova!" target="_blank" rel="noopener" aria-label="WhatsApp Us">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    <button class="float-icon back-to-top" id="backToTop" aria-label="Back to Top">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
+  </div>
+
+  <script>
+    const topbar = document.getElementById('topbar');
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      topbar.classList.toggle('scrolled', window.scrollY > 40);
+      backToTop.classList.toggle('show', window.scrollY > 450);
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileClose = document.getElementById('mobileClose');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuToggle.addEventListener('click', () => { mobileMenu.classList.add('open'); document.body.style.overflow = 'hidden'; });
+    mobileClose.addEventListener('click', () => { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; });
+    mobileMenu.querySelectorAll('.mobile-links a').forEach(l => l.addEventListener('click', () => { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; }));
+  </script>
+</body>
+</html>

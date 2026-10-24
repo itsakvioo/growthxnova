@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#06090e">
+  <title>Growth X Nova — Performance Marketing Studio</title>
+  <meta name="description" content="Turn attention into scalable revenue with high-ROAS paid media and aggressive customer acquisition systems.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    /* ==========================================================
+       CSS VARIABLES & GLOBAL RESET
+       ========================================================== */
+    :root {
+      --bg: #06090e;
+      --card-bg: rgba(13, 19, 28, 0.78);
+      --ink: #f2f6fa;
+      --muted: #8b9baa;
+      --muted-light: #b4c2ce;
+      --line: rgba(255, 255, 255, 0.08);
+      --line-bright: rgba(255, 255, 255, 0.18);
+      --lime: #c6ff5e;
+      --lime-dim: rgba(198, 255, 94, 0.12);
+      --lime-glow: rgba(198, 255, 94, 0.28);
+      --cyan: #64e8ed;
+      --purple: #a58bff;
+      --grad: linear-gradient(120deg, #c6ff5e 0%, #64e8ed 100%);
+      --grad-purple: linear-gradient(120deg, #64e8ed 0%, #a58bff 100%);
+      --radius-sm: 10px;
+      --radius-md: 18px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient Background Orbs */
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.22;
+      animation: floatOrb 22s infinite alternate ease-in-out;
+    }
+
+    .ambient-orb-1 { width: 500px; height: 500px; background: var(--lime); top: -100px; right: -60px; }
+    .ambient-orb-2 { width: 550px; height: 550px; background: var(--cyan); top: 35%; left: -180px; animation-duration: 25s; animation-delay: -5s; }
+    .ambient-orb-3 { width: 450px; height: 450px; background: var(--purple); bottom: 5%; right: -80px; animation-duration: 20s; }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(40px, 50px) scale(1.08); }
+      100% { transform: translate(-30px, 20px) scale(0.96); }
+    }
+
+    #bgCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.55;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    
+    /* Guaranteed Centering & Safe Margins on all screens */
+    .wrap {
+      width: min(1200px, 100%);
+      margin-inline: auto;
+      padding-inline: clamp(24px, 5vw, 40px);
+    }
+
+    .gradient-text {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .gradient-purple-text {
+      background: var(--grad-purple);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    /* Eyebrow - Fixed width and alignment */
+    .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--lime);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 14px;
+      background: rgba(198, 255, 94, 0.08);
+      border: 1px solid rgba(198, 255, 94, 0.22);
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(8px);
+      margin-bottom: 20px;
+      width: fit-content;
+      max-width: max-content;
+      align-self: flex-start;
+      flex-shrink: 0;
+    }
+
+    .eyebrow .live-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--lime);
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .eyebrow .live-dot::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 1px solid var(--lime);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.9; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 24px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 13.5px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--lime);
+      color: #06090e;
+      box-shadow: 0 4px 20px rgba(198, 255, 94, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(198, 255, 94, 0.4);
+      background: #d4ff7d;
+    }
+
+    .btn-primary:hover i { transform: translateX(4px); }
+    .btn-primary i { transition: transform 0.25s ease; }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--ink);
+      border-color: var(--line-bright);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--lime);
+      color: var(--lime);
+      transform: translateY(-2px);
+    }
+
+    .btn-shimmer::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+      transform: rotate(25deg);
+    }
+
+    .btn-shimmer:hover::after {
+      left: 140%;
+      transition: 0.75s ease-in-out;
+    }
+
+    .section { padding: 85px 0; position: relative; }
+    .section-head.center { text-align: center; max-width: 680px; margin: 0 auto 45px; }
+    .section-head h2 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.12;
+      letter-spacing: -0.04em;
+      margin: 10px 0 16px;
+    }
+    .section-head p { color: var(--muted); font-size: 15.5px; line-height: 1.7; }
+
+    /* ==========================================================
+       UNIFIED TOPBAR & NAVBAR (IDENTICAL ACROSS ALL PAGES)
+       ========================================================== */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: 76px;
+      display: flex;
+      align-items: center;
+      background: rgba(6, 9, 14, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--line);
+      transition: var(--transition);
+    }
+
+    .topbar.scrolled {
+      background: rgba(6, 9, 14, 0.96);
+      border-bottom-color: var(--line-bright);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      width: 100%;
+    }
+    
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--grad);
+      display: grid;
+      place-items: center;
+      color: #06090e;
+      font-size: 16px;
+      box-shadow: 0 0 20px rgba(198, 255, 94, 0.35);
+      transition: var(--transition);
+    }
+
+    .brand:hover .brand-mark {
+      transform: rotate(8deg) scale(1.05);
+    }
+
+    .navlinks {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 8px 24px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--line);
+    }
+
+    .navlinks a {
+      color: var(--muted-light);
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 4px 2px;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .navlinks a:hover,
+    .navlinks a.active {
+      color: #fff;
+    }
+
+    .navlinks a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--lime);
+      border-radius: 2px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-btn {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--line-bright);
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      place-items: center;
+      transition: var(--transition);
+    }
+
+    .menu-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--lime);
+    }
+
+    /* Mobile Drawer */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 9, 14, 0.98);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      z-index: 1100;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+
+    .mobile-menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 25px;
+    }
+
+    .mobile-close-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--line-bright);
+      color: #fff;
+      font-size: 18px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .mobile-close-btn:hover {
+      background: var(--lime);
+      color: #06090e;
+    }
+
+    .mobile-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: auto;
+    }
+
+    .mobile-links a {
+      font-family: 'Manrope', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink);
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .mobile-links a:hover,
+    .mobile-links a.active {
+      color: var(--lime);
+      padding-left: 6px;
+    }
+
+    /* ==========================================================
+       HERO SECTION (Separated Wrap & Grid)
+       ========================================================== */
+    .hero {
+      min-height: auto;
+      padding: 135px 0 60px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 40px;
+      width: 100%;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .hero h1 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.3rem, 4.2vw, 3.8rem);
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+      margin-bottom: 18px;
+    }
+
+    .hero-desc {
+      color: var(--muted-light);
+      font-size: clamp(15px, 1.6vw, 17px);
+      line-height: 1.75;
+      max-width: 520px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .hero-proof {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .avatar-stack {
+      display: flex;
+      flex-shrink: 0;
+    }
+
+    .avatar-stack .av {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #1a2330;
+      border: 2px solid var(--bg);
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--lime);
+      margin-left: -10px;
+    }
+
+    .avatar-stack .av:first-child { margin-left: 0; }
+
+    .hero-proof-text {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .hero-proof-text strong { color: #fff; }
+
+    /* 3D Interactive Hero Card */
+    .hero-visual {
+      position: relative;
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .tilt-card {
+      width: 100%;
+      max-width: 420px;
+      background: linear-gradient(145deg, rgba(21, 29, 41, 0.9), rgba(11, 16, 23, 0.95));
+      border: 1px solid var(--line-bright);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 50px rgba(198, 255, 94, 0.08);
+      backdrop-filter: blur(20px);
+      transform-style: preserve-3d;
+      transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--lime);
+      background: rgba(198, 255, 94, 0.1);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+    }
+
+    .card-metrics { margin: 18px 0 14px; }
+
+    .card-metrics-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .card-metrics-num {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 44px;
+      letter-spacing: -0.05em;
+      line-height: 1.1;
+      margin-top: 4px;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .card-metrics-num small {
+      font-size: 14px;
+      color: var(--lime);
+      font-weight: 700;
+    }
+
+    .chart-container {
+      height: 120px;
+      margin: 14px 0;
+    }
+
+    .chart-container svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .chart-path {
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      animation: drawChart 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s;
+    }
+
+    @keyframes drawChart {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .card-grid-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 10px 8px;
+      text-align: center;
+    }
+
+    .stat-pill span {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .stat-pill strong {
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    /* Floating badges */
+    .float-chip {
+      position: absolute;
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      background: rgba(16, 23, 33, 0.92);
+      border: 1px solid var(--line-bright);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 2;
+      animation: floatChip 5s infinite ease-in-out alternate;
+    }
+
+    .chip-left {
+      top: -46px;
+      left: -10px;
+    }
+
+    .chip-right {
+      bottom: -36px;
+      right: 10px;
+      animation-delay: -2.5s;
+    }
+
+    .float-chip i {
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      background: var(--lime-dim);
+      color: var(--lime);
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+    }
+
+    .float-chip strong { display: block; color: #fff; font-size: 12px; }
+    .float-chip span { color: var(--muted); font-size: 10px; }
+
+    @keyframes floatChip {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+
+    /* ==========================================================
+       MARQUEE TICKER
+       ========================================================== */
+    .marquee-strip {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(10, 14, 22, 0.6);
+      padding: 16px 0;
+      overflow: hidden;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 36px;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted-light);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .marquee-item i { color: var(--lime); font-size: 10px; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ==========================================================
+       KEY METRICS COUNTER BAR (FIXED TYPOGRAPHY)
+       ========================================================== */
+    .metrics-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .metric-box {
+      background: var(--card-bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      backdrop-filter: blur(16px);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .metric-box:hover {
+      transform: translateY(-4px);
+      border-color: rgba(198, 255, 94, 0.35);
+    }
+
+    .metric-box strong {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(2.2rem, 3.2vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+      margin-bottom: 8px;
+    }
+
+    .metric-box strong .counter {
+      font-size: inherit;
+      font-family: inherit;
+      font-weight: inherit;
+      color: inherit;
+      display: inline-block;
+    }
+
+    .metric-box .metric-label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ==========================================================
+       SPOTLIGHT PREVIEWS
+       ========================================================== */
+    .spotlight-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-bottom: 36px;
+    }
+
+    .spotlight-card {
+      background: var(--card-bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 30px 24px;
+      backdrop-filter: blur(14px);
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+      min-width: 0;
+    }
+
+    .spotlight-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(198, 255, 94, 0.4);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+    }
+
+    .spotlight-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: rgba(198, 255, 94, 0.08);
+      border: 1px solid rgba(198, 255, 94, 0.2);
+      display: grid;
+      place-items: center;
+      color: var(--lime);
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .spotlight-card h3 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .spotlight-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .spotlight-features {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .spotlight-features li {
+      font-size: 13px;
+      color: var(--muted-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .spotlight-features li i { color: var(--lime); font-size: 11px; }
+
+    .spotlight-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--lime);
+      margin-top: auto;
+    }
+
+    .spotlight-link i { transition: transform 0.2s; }
+    .spotlight-card:hover .spotlight-link i { transform: translateX(5px); }
+
+    /* Proof Banner */
+    .proof-banner {
+      background: linear-gradient(135deg, rgba(16, 23, 34, 0.95), rgba(9, 13, 20, 0.95));
+      border: 1px solid var(--line-bright);
+      border-radius: var(--radius-lg);
+      padding: clamp(28px, 4vw, 55px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .proof-stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 24px 0;
+    }
+
+    .p-stat strong {
+      display: block;
+      font-family: 'Manrope', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--lime);
+    }
+
+    .p-stat span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .proof-snapshot-card {
+      background: #0d141d;
+      border: 1px solid var(--line-bright);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      max-width: 400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Founder Teaser */
+    .founder-teaser {
+      background: linear-gradient(135deg, rgba(17, 25, 37, 0.7), rgba(9, 14, 21, 0.8));
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .founder-badge-circle {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 2px solid var(--lime);
+      margin: 0 auto;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 40% 30%, rgba(198, 255, 94, 0.15), transparent 70%), #111a24;
+      font-family: 'Manrope', sans-serif;
+      font-size: 52px;
+      font-weight: 800;
+      color: var(--lime);
+    }
+
+    /* CTA Launchpad */
+    .cta-launchpad {
+      background: radial-gradient(ellipse at 50% 0%, rgba(198, 255, 94, 0.18), transparent 70%), linear-gradient(180deg, #0d141e 0%, #06090e 100%);
+      border: 1px solid rgba(198, 255, 94, 0.3);
+      border-radius: 28px;
+      padding: clamp(40px, 6vw, 75px) 24px;
+      text-align: center;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+    }
+
+    .cta-launchpad h2 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.1rem, 4.5vw, 3.8rem);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      margin-bottom: 18px;
+    }
+
+    /* ==========================================================
+       COMPLETE FOOTER
+       ========================================================== */
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 65px 0 28px;
+      background: #04060a;
+      position: relative;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1.2fr;
+      gap: 40px;
+      padding-bottom: 40px;
+    }
+
+    .footer-brand p {
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 320px;
+      margin: 16px 0 22px;
+      line-height: 1.7;
+    }
+
+    .social-row { display: flex; gap: 10px; }
+
+    .social-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      color: var(--muted-light);
+      font-size: 15px;
+      transition: var(--transition);
+    }
+
+    .social-btn:hover {
+      background: var(--lime);
+      color: #06090e;
+      border-color: var(--lime);
+      transform: translateY(-3px);
+    }
+
+    .footer h4 {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 18px;
+    }
+
+    .footer-nav-list {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .footer-nav-list a {
+      color: var(--muted);
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    .footer-nav-list a:hover {
+      color: #fff;
+      padding-left: 4px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--line);
+      padding-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Floating Tools */
+    .floating-tools {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 900;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .float-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .float-icon:hover {
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    .float-wa {
+      background: #25d366;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+    }
+
+    .back-to-top {
+      background: #111822;
+      border: 1px solid var(--line-bright);
+      color: var(--lime);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================== */
+    @media (max-width: 1100px) {
+      .float-chip { display: none !important; }
+    }
+
+    @media (max-width: 960px) {
+      .navlinks, .nav-cta { display: none !important; }
+      .menu-btn { display: grid !important; }
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .hero-content { align-items: flex-start; text-align: left; }
+      .hero-visual { order: 2; width: 100%; max-width: 440px; margin: 0 auto; }
+      .metrics-bar { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .spotlight-grid { grid-template-columns: repeat(2, 1fr); }
+      .proof-banner { grid-template-columns: 1fr; gap: 30px; }
+      .founder-teaser { grid-template-columns: 1fr; text-align: center; }
+      .founder-teaser .eyebrow { align-self: center; margin-inline: auto; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { padding-inline: 18px; }
+      .hero { padding: 95px 0 35px; }
+      .hero h1 { font-size: 2.2rem; }
+      .hero-desc { font-size: 14.5px; }
+      .hero-actions { flex-direction: column; width: 100%; gap: 10px; }
+      .hero-actions .btn { width: 100%; }
+      .hero-proof { flex-wrap: wrap; gap: 12px; }
+      .tilt-card { padding: 18px 14px; }
+      .card-metrics-num { font-size: 34px; }
+      .stat-pill strong { font-size: 14px; }
+      .metrics-bar { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .metric-box { padding: 16px 14px; }
+      .metric-box strong { font-size: 26px; }
+      .spotlight-grid { grid-template-columns: 1fr; }
+      .proof-stats-row { grid-template-columns: 1fr; gap: 12px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .cta-launchpad { padding: 36px 16px; border-radius: 20px; }
+      .cta-launchpad .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Dynamic Orbs -->
+  <div class="ambient-bg">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-orb ambient-orb-3"></div>
+  </div>
+
+  <!-- Interactive Grid / Particle Canvas -->
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- Navigation (Exact Same Structure Across All Pages) -->
+  <header class="topbar" id="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="index.html" aria-label="Growth X Nova Home">
+        <span class="brand-mark"><i class="fa-solid fa-arrow-trend-up"></i></span>
+        <span>GROWTH <span class="gradient-text">X NOVA</span></span>
+      </a>
+
+      <!-- Desktop Navlinks -->
+      <nav class="navlinks" aria-label="Primary navigation">
+        <a href="index.html" class="active">Home</a>
+        <a href="services.html">Services</a>
+        <a href="packages.html">Packages</a>
+        <a href="results.html">Results</a>
+        <a href="courses.html">Courses</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-primary btn-shimmer nav-cta" href="contact.html">
+          <span>Book Call</span>
+          <i class="fa-solid fa-bolt"></i>
+        </a>
+        <button class="menu-btn" id="menuToggle" aria-label="Open Navigation menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Responsive Mobile Drawer Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark"><i class="fa-solid fa-arrow-trend-up"></i></span>
+        <span>GROWTH <span class="gradient-text">X NOVA</span></span>
+      </a>
+      <button class="mobile-close-btn" id="mobileClose" aria-label="Close menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="mobile-links">
+      <a href="index.html" class="active">Home <i class="fa-solid fa-chevron-right"></i></a>
+      <a href="services.html">Services <i class="fa-solid fa-chevron-right"></i></a>
+      <a href="packages.html">Packages <i class="fa-solid fa-chevron-right"></i></a>
+      <a href="results.html">Results <i class="fa-solid fa-chevron-right"></i></a>
+      <a href="courses.html">Courses <i class="fa-solid fa-chevron-right"></i></a>
+      <a href="about.html">About Us <i class="fa-solid fa-chevron-right"></i></a>
+      <a href="contact.html">Contact Us <i class="fa-solid fa-chevron-right"></i></a>
+    </div>
+
+    <div style="margin-top: 15px;">
+      <a class="btn btn-primary btn-shimmer" href="contact.html" style="width: 100%;">
+        <span>Book Strategy Call</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+
+  <main>
+    <!-- HERO SECTION (Nested correctly inside wrap for safe margins) -->
+    <section class="hero" id="home">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <div class="eyebrow">
+              <span class="live-dot"></span> Performance Marketing Studio
+            </div>
+            <h1>
+              Make your brand <br>
+              <span class="gradient-text">impossible</span> <br>
+              to ignore.
+            </h1>
+            <p class="hero-desc">
+              We architect aggressive ad systems, high-converting creative psychology, and multi-channel scale mechanisms that turn wasted attention into predictable monthly revenue.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary btn-shimmer" href="services.html">
+                <span>Explore All Services</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </a>
+              <a class="btn btn-outline" href="contact.html">
+                <span>Book Strategy Call</span>
+                <i class="fa-solid fa-calendar-check"></i>
+              </a>
+            </div>
+            <div class="hero-proof">
+              <div class="avatar-stack">
+                <div class="av">GX</div>
+                <div class="av">AR</div>
+                <div class="av">FB</div>
+                <div class="av">+</div>
+              </div>
+              <div class="hero-proof-text">
+                <strong>1,000+ Scaled Campaigns</strong><br>
+                Over $60,000+ Ad Spend Deployed with Positive ROAS
+              </div>
+            </div>
+          </div>
+
+          <!-- 3D Interactive Hero Card -->
+          <div class="hero-visual">
+            <div class="float-chip chip-left">
+              <i class="fa-solid fa-fire"></i>
+              <div>
+                <strong>+340% Revenue Lift</strong>
+                <span>D2C Brand Scale</span>
+              </div>
+            </div>
+
+            <div class="tilt-card" id="tiltCard">
+              <div class="card-top">
+                <span style="font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px;">
+                  <i class="fa-solid fa-chart-line" style="color: var(--lime);"></i> Growth Engine Live
+                </span>
+                <span class="badge-live"><i class="fa-solid fa-circle"></i> OPTIMIZING</span>
+              </div>
+
+              <div class="card-metrics">
+                <div class="card-metrics-label">Avg Return On Ad Spend</div>
+                <div class="card-metrics-num">
+                  <span class="counter" data-target="3.4">3.4</span>x
+                  <small><i class="fa-solid fa-arrow-trend-up"></i> +184% CTR</small>
+                </div>
+              </div>
+
+              <div class="chart-container">
+                <svg viewBox="0 0 380 120" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#c6ff5e" stop-opacity="0.35"/>
+                      <stop offset="100%" stop-color="#c6ff5e" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M0 98 C40 90, 60 70, 95 78 S140 35, 180 50 S220 20, 260 38 S310 12, 380 5 L380 120 L0 120 Z" fill="url(#chartGrad)"/>
+                  <path class="chart-path" d="M0 98 C40 90, 60 70, 95 78 S140 35, 180 50 S220 20, 260 38 S310 12, 380 5" fill="none" stroke="#c6ff5e" stroke-width="3" stroke-linecap="round"/>
+                  <circle cx="380" cy="5" r="5" fill="#c6ff5e"></circle>
+                </svg>
+              </div>
+
+              <div class="card-grid-stats">
+                <div class="stat-pill"><span>Brands</span><strong>50+</strong></div>
+                <div class="stat-pill"><span>Total Spend</span><strong>50L+</strong></div>
+                <div class="stat-pill"><span>Conversion</span><strong style="color: var(--lime);">+4.2x</strong></div>
+              </div>
+            </div>
+
+            <div class="float-chip chip-right">
+              <i class="fa-solid fa-bullseye"></i>
+              <div>
+                <strong>Built to Convert</strong>
+                <span>Targeted Customer Acq</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE TICKER -->
+    <div class="marquee-strip">
+      <div class="marquee-track">
+        <div class="marquee-item"><i class="fa-solid fa-bolt"></i> Meta Ads Scale</div>
+        <div class="marquee-item"><i class="fa-solid fa-bolt"></i> High-Intent Google Search</div>
+        <div class="marquee-item"><i class="fa-solid fa-bolt"></i> WhatsApp API Automation</div>
+        <div class="marquee-item"><i class="fa-solid fa-bolt"></i> E-Commerce & D2C Scaling</div>
+        <div class="marquee-item"><i class="fa-solid fa-bolt"></i> High-Converting Funnels</div>
+        <div class="marquee-item"><i class="fa-solid fa-bolt"></i> Performance Video Creatives</div>
+        <!-- Duplicated for infinite seamless loop -->
+        <div class="marquee-item"><i class="fa-solid fa-bolt"></i> Meta Ads Scale</div>
+        <div class="marquee-item"><i class="fa-solid fa-bolt"></i> High-Intent Google Search</div>
+        <div class="marquee-item"><i class="fa-solid fa-bolt"></i> WhatsApp API Automation</div>
+        <div class="marquee-item"><i class="fa-solid fa-bolt"></i> E-Commerce & D2C Scaling</div>
+        <div class="marquee-item"><i class="fa-solid fa-bolt"></i> High-Converting Funnels</div>
+        <div class="marquee-item"><i class="fa-solid fa-bolt"></i> Performance Video Creatives</div>
+      </div>
+    </div>
+
+    <!-- STATS COUNTERS -->
+    <section class="section" style="padding-top: 50px; padding-bottom: 50px;">
+      <div class="wrap">
+        <div class="metrics-bar reveal">
+          <div class="metric-box">
+            <strong class="gradient-text"><span class="counter" data-target="3">3</span>+ Yrs</strong>
+            <span class="metric-label">Proven Industry Dominance</span>
+          </div>
+          <div class="metric-box">
+            <strong><span class="counter" data-target="50">50</span>+</strong>
+            <span class="metric-label">Active High-Growth Brands</span>
+          </div>
+          <div class="metric-box">
+            <strong style="color: var(--cyan);"><span class="counter" data-target="50">50</span>L+</strong>
+            <span class="metric-label">Verified Paid Ad Spend</span>
+          </div>
+          <div class="metric-box">
+            <strong><span class="counter" data-target="1000">1000</span>+</strong>
+            <span class="metric-label">High-Performing Projects</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES SPOTLIGHT TEASER -->
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head center reveal">
+          <div class="eyebrow"><i class="fa-solid fa-shapes"></i> Core Capabilities</div>
+          <h2>Performance Engineered <br><span class="gradient-text">For Pure ROI</span></h2>
+          <p>We do not sell vanity metrics. We construct aggressive customer acquisition systems designed specifically to generate high returns.</p>
+        </div>
+
+        <div class="spotlight-grid">
+          <article class="spotlight-card reveal">
+            <div class="spotlight-icon"><i class="fa-brands fa-meta"></i></div>
+            <h3>Meta & Instagram Ads</h3>
+            <p>Targeted hyper-scaling campaigns with algorithmic creative testing, retargeting funnels, and precision pixel optimization.</p>
+            <ul class="spotlight-features">
+              <li><i class="fa-solid fa-check"></i> Algorithmic Ad Sets</li>
+              <li><i class="fa-solid fa-check"></i> High CTR Video Angles</li>
+            </ul>
+            <a class="spotlight-link" href="services.html">
+              <span>View Service Details</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </article>
+
+          <article class="spotlight-card reveal">
+            <div class="spotlight-icon"><i class="fa-brands fa-google"></i></div>
+            <h3>Google & Search Ads</h3>
+            <p>High-intent keyword capture, YouTube video ads, and smart bidding structures that reach customers at the exact buying moment.</p>
+            <ul class="spotlight-features">
+              <li><i class="fa-solid fa-check"></i> High-Intent Search Captures</li>
+              <li><i class="fa-solid fa-check"></i> Smart Bidding Architecture</li>
+            </ul>
+            <a class="spotlight-link" href="services.html">
+              <span>View Service Details</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </article>
+
+          <article class="spotlight-card reveal">
+            <div class="spotlight-icon"><i class="fa-brands fa-whatsapp"></i></div>
+            <h3>WhatsApp CRM & API</h3>
+            <p>Direct broadcast automation, AI-driven qualification chatflows, and payment links that convert leads immediately inside WhatsApp.</p>
+            <ul class="spotlight-features">
+              <li><i class="fa-solid fa-check"></i> Automated Chatflows</li>
+              <li><i class="fa-solid fa-check"></i> 10,000+ Broadcasting</li>
+            </ul>
+            <a class="spotlight-link" href="services.html">
+              <span>View Service Details</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </article>
+        </div>
+
+        <div style="text-align: center;" class="reveal">
+          <a class="btn btn-outline" href="services.html">
+            <span>Explore All 9 Growth Services</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROOF & CASE STUDIES TEASER -->
+    <section class="section">
+      <div class="wrap">
+        <div class="proof-banner reveal">
+          <div>
+            <div class="eyebrow"><i class="fa-solid fa-shield-halved"></i> Verified Performance</div>
+            <h3 style="font-family: 'Manrope', sans-serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 800; line-height: 1.1; margin-bottom: 16px;">
+              Results That <br><span class="gradient-text">Speak Louder</span> Than Words.
+            </h3>
+            <p style="color: var(--muted-light); font-size: 15px; line-height: 1.7;">
+              Take a look inside the actual ad accounts and revenue dashboards of campaigns we manage every day.
+            </p>
+            <div class="proof-stats-row">
+              <div class="p-stat"><strong>3.4x</strong><span>Average ROAS</span></div>
+              <div class="p-stat"><strong>184%</strong><span>CTR Lift</span></div>
+              <div class="p-stat"><strong>$60K+</strong><span>Handled Cleanly</span></div>
+            </div>
+            <a class="btn btn-primary btn-shimmer" href="results.html">
+              <span>View All Proof & Case Studies</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+
+          <div>
+            <div class="proof-snapshot-card">
+              <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 12px;">
+                <span><i class="fa-solid fa-circle-check" style="color: var(--lime);"></i> Verified Client Dashboard</span>
+                <span style="color: var(--lime); font-family: 'DM Mono', monospace; font-size: 11px;">LIVE SCALE</span>
+              </div>
+              <div style="font-family: 'Manrope', sans-serif; font-size: 32px; font-weight: 800; color: #fff;">$17,650</div>
+              <div style="color: var(--cyan); font-size: 13px; margin: 4px 0 14px;">Generated from $3,700 Ad Spend (4.77x ROAS)</div>
+              <a href="results.html" style="font-size: 12px; color: var(--lime); font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+                See full campaign breakdown <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PACKAGES SPOTLIGHT TEASER -->
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head center reveal">
+          <div class="eyebrow"><i class="fa-solid fa-tags"></i> Transparent Pricing</div>
+          <h2>Choose Your <br><span class="gradient-text">Scale Trajectory</span></h2>
+          <p>No hidden clauses. Clear monthly packages tailored to your brand's growth phase.</p>
+        </div>
+
+        <div class="spotlight-grid">
+          <article class="spotlight-card reveal">
+            <span style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 10px;">STAGE 01</span>
+            <h3>Basic Package</h3>
+            <p>Ideal for emerging startups and local businesses looking to establish consistent inbound lead generation.</p>
+            <div style="font-family: 'Manrope', sans-serif; font-size: 30px; font-weight: 800; color: #fff; margin-bottom: 14px;">
+              $39 <small style="font-size: 13px; color: var(--muted); font-weight: 400;">/month</small>
+            </div>
+            <ul class="spotlight-features">
+              <li><i class="fa-solid fa-check"></i> High-Intent Lead Ads</li>
+              <li><i class="fa-solid fa-check"></i> Creative Ads Editing</li>
+              <li><i class="fa-solid fa-check"></i> WhatsApp Support</li>
+            </ul>
+            <a class="btn btn-outline" href="packages.html" style="width: 100%; margin-top: auto;">Compare Full Package</a>
+          </article>
+
+          <article class="spotlight-card reveal" style="border-color: var(--lime); background: linear-gradient(150deg, rgba(198, 255, 94, 0.08), rgba(13, 19, 28, 0.95));">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <span style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--lime);">STAGE 02</span>
+              <span style="background: var(--lime); color: #06090e; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: var(--radius-full);">MOST POPULAR</span>
+            </div>
+            <h3>Essential Scale</h3>
+            <p>For brands ready to scale sales aggressively across social media, affiliate, and automated funnels.</p>
+            <div style="font-family: 'Manrope', sans-serif; font-size: 30px; font-weight: 800; color: var(--lime); margin-bottom: 14px;">
+              $79 <small style="font-size: 13px; color: var(--muted); font-weight: 400;">/month</small>
+            </div>
+            <ul class="spotlight-features">
+              <li><i class="fa-solid fa-check"></i> Lead & Followers Campaigns</li>
+              <li><i class="fa-solid fa-check"></i> Unlimited Sales Ad Variations</li>
+              <li><i class="fa-solid fa-check"></i> Dedicated Account Manager</li>
+              <li><i class="fa-solid fa-check"></i> NO Need Facebook Account</li>
+            </ul>
+            <a class="btn btn-primary btn-shimmer" href="packages.html" style="width: 100%; margin-top: auto;">Get Started Now</a>
+          </article>
+
+          <article class="spotlight-card reveal">
+            <span style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 10px;">STAGE 03</span>
+            <h3>Pro Enterprise</h3>
+            <p>Full-stack performance engine with dedicated ads managers, weekly Zoom consultations, and landing pages.</p>
+            <div style="font-family: 'Manrope', sans-serif; font-size: 30px; font-weight: 800; color: #fff; margin-bottom: 14px;">
+              $149 <small style="font-size: 13px; color: var(--muted); font-weight: 400;">/month</small>
+            </div>
+            <ul class="spotlight-features">
+              <li><i class="fa-solid fa-check"></i> 2 Dedicated Media Buyers</li>
+              <li><i class="fa-solid fa-check"></i> Landing Page Architecture</li>
+              <li><i class="fa-solid fa-check"></i> Weekly Strategy Zoom Sessions</li>
+            </ul>
+            <a class="btn btn-outline" href="packages.html" style="width: 100%; margin-top: auto;">Compare Full Package</a>
+          </article>
+        </div>
+
+        <div style="text-align: center;" class="reveal">
+          <a class="btn btn-outline" href="packages.html">
+            <span>View All Packages, Terms & Setup Details</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOUNDER TEASER -->
+    <section class="section">
+      <div class="wrap">
+        <div class="founder-teaser reveal">
+          <div style="text-align: center;">
+            <div class="founder-badge-circle">AR</div>
+            <span style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--lime); letter-spacing: 0.12em; display: block; margin-top: 14px;">
+              SENIOR MEDIA BUYER
+            </span>
+          </div>
+          <div>
+            <div class="eyebrow"><i class="fa-solid fa-user-tie"></i> The Mind Behind The Strategy</div>
+            <h3 style="font-family: 'Manrope', sans-serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; margin-bottom: 14px;">
+              Hi, I'm <span class="gradient-text">Ayush Ranjan</span>
+            </h3>
+            <p style="color: var(--muted-light); font-size: 15px; line-height: 1.8; margin-bottom: 22px;">
+              I believe modern advertising isn't just about pushing buttons in Ads Manager—it is an intricate blend of consumer psychology, data-driven creative angles, and relentless conversion optimization. With over 1,000 completed client campaigns, my team builds scalable growth engines.
+            </p>
+            <a class="btn btn-outline" href="about.html">
+              <span>Read Full Founder Story & Philosophy</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA LAUNCHPAD -->
+    <section class="section" style="padding-top: 30px;">
+      <div class="wrap">
+        <div class="cta-launchpad reveal">
+          <div class="eyebrow" style="margin-bottom: 18px;"><i class="fa-solid fa-rocket"></i> Ready For High-ROAS Growth?</div>
+          <h2>Let's Make Your Revenue <br><span class="gradient-text">Impossible To Stop.</span></h2>
+          <p style="color: var(--muted-light); font-size: 16px; max-width: 600px; margin: 0 auto 32px; line-height: 1.7;">
+            Stop burning ad budgets on random tactics. Book a private strategy consultation and let us engineer a custom customer acquisition roadmap.
+          </p>
+          <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+            <a class="btn btn-primary btn-shimmer" href="contact.html">
+              <span>Book Strategy Call</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a class="btn btn-outline" href="https://wa.me/918931980405?text=Hi%20GrowthX%20Nova!%20I'm%20interested%20in%20your%20services." target="_blank" rel="noopener">
+              <i class="fa-brands fa-whatsapp" style="color: #25d366;"></i>
+              <span>Instant WhatsApp Chat</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- COMPLETE FOOTER -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html">
+            <span class="brand-mark"><i class="fa-solid fa-arrow-trend-up"></i></span>
+            <span>GROWTH <span class="gradient-text">X NOVA</span></span>
+          </a>
+          <p>A high-performance media buying & growth studio. We engineer scalable acquisition funnels for forward-thinking brands.</p>
+          <div class="social-row">
+            <a class="social-btn" href="https://www.instagram.com/growthxnova1/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a class="social-btn" href="https://www.youtube.com/@growthxnova" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a class="social-btn" href="https://t.me/+FfOqjUJ07mUxYTU1" target="_blank" rel="noopener" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+            <a class="social-btn" href="https://wa.me/918931980405" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <div>
+          <h4>Explore</h4>
+          <ul class="footer-nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">All Services</a></li>
+            <li><a href="packages.html">Pricing & Packages</a></li>
+            <li><a href="results.html">Proof & Case Studies</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Company</h4>
+          <ul class="footer-nav-list">
+            <li><a href="about.html">About The Studio</a></li>
+            <li><a href="courses.html">Courses & Academy</a></li>
+            <li><a href="contact.html">Book Strategy Call</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Direct Connect</h4>
+          <ul class="footer-nav-list">
+            <li><a href="tel:+918931980405"><i class="fa-solid fa-phone" style="color: var(--lime); margin-right: 8px;"></i> +91 8931980405</a></li>
+            <li><a href="mailto:admin@growthxnova.com"><i class="fa-solid fa-envelope" style="color: var(--lime); margin-right: 8px;"></i> admin@growthxnova.com</a></li>
+            <li><span style="color: var(--muted); font-size: 13px;"><i class="fa-solid fa-location-dot" style="color: var(--lime); margin-right: 8px;"></i> Global & India</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Growth X Nova. All rights reserved.</span>
+        <span>ENGINEERED FOR COMPOUNDING REVENUE ↗</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Quick Tools -->
+  <div class="floating-tools">
+    <a class="float-icon float-wa" href="https://wa.me/918931980405?text=Hi%20GrowthX%20Nova!" target="_blank" rel="noopener" aria-label="WhatsApp Us">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    <button class="float-icon back-to-top" id="backToTop" aria-label="Back to Top">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
+  </div>
+
+  <!-- JavaScript Animations -->
+  <script>
+    // Sticky Header & Back To Top
+    const topbar = document.getElementById('topbar');
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      topbar.classList.toggle('scrolled', window.scrollY > 40);
+      backToTop.classList.toggle('show', window.scrollY > 450);
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Mobile Menu Controls
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileClose = document.getElementById('mobileClose');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    function openMobileMenu() {
+      mobileMenu.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    menuToggle.addEventListener('click', openMobileMenu);
+    mobileClose.addEventListener('click', closeMobileMenu);
+    mobileMenu.querySelectorAll('.mobile-links a').forEach(l => l.addEventListener('click', closeMobileMenu));
+
+    // 3D Tilt Card (Desktop only)
+    const tiltCard = document.getElementById('tiltCard');
+    if (tiltCard && window.innerWidth > 960) {
+      document.addEventListener('mousemove', (e) => {
+        const rect = tiltCard.getBoundingClientRect();
+        const angleX = (e.clientY - (rect.top + rect.height / 2)) / 35;
+        const angleY = ((rect.left + rect.width / 2) - e.clientX) / 35;
+        tiltCard.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+      });
+      document.addEventListener('mouseleave', () => tiltCard.style.transform = 'rotateX(0deg) rotateY(0deg)');
+    }
+
+    // Number Counter Animation Function
+    function runCounterAnimation(el) {
+      if (el.dataset.animated === 'true') return;
+      el.dataset.animated = 'true';
+      const target = parseFloat(el.getAttribute('data-target'));
+      if (isNaN(target)) return;
+      const duration = 1600;
+      const start = performance.now();
+      const isFloat = target % 1 !== 0;
+
+      function step(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const val = (1 - Math.pow(1 - p, 3)) * target;
+        el.textContent = isFloat ? val.toFixed(1) : Math.floor(val);
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(step);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.hero .counter').forEach(runCounterAnimation);
+    });
+    document.querySelectorAll('.hero .counter').forEach(runCounterAnimation);
+
+    const counterObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          runCounterAnimation(entry.target);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.counter').forEach(c => counterObserver.observe(c));
+
+    const revealObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Particle Canvas Background
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+    window.addEventListener('resize', () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; });
+
+    const particles = [];
+    for (let i = 0; i < Math.min(window.innerWidth / 20, 50); i++) {
+      particles.push({
+        x: Math.random() * width, y: Math.random() * height,
+        radius: Math.random() * 1.6 + 0.4,
+        speedX: (Math.random() - 0.5) * 0.3, speedY: (Math.random() - 0.5) * 0.3,
+        opacity: Math.random() * 0.6 + 0.2
+      });
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        p.x += p.speedX; p.y += p.speedY;
+        if (p.x < 0) p.x = width; if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height; if (p.y > height) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(198, 255, 94, ${p.opacity})`;
+        ctx.fill();
+      });
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dist = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(100, 232, 237, ${0.1 * (1 - dist / 100)})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  </script>
+</body>
+</html>
